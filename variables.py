@@ -11,6 +11,7 @@ variables = {
     'v9': 0
 }
 
+
 def is_variable_placement(tokens):
     first_token = tokens[0]
     second_token = tokens[1]
@@ -18,6 +19,7 @@ def is_variable_placement(tokens):
     if first_token in variables and second_token == '=':
         return True
     return False
+
 
 def place_variables(tokens):
     for i, token in enumerate(tokens):

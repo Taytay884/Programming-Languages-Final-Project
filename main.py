@@ -1,6 +1,7 @@
 import arithmetic
 import conditional
 from variables import *
+from blocks import *
 import re
 
 arithmetic_order = ['*', '/', '+', '-']
@@ -31,7 +32,6 @@ def evaluate_expression(expr):
     return eval(expr.replace('/', '//'))
 
 def arithmetic_operation(tokens):
-    print(tokens)
     while len(tokens) > 1:
         operator_index = arithmetic.find_strongest_arithmetic_operator_index(tokens)
         prev_token = tokens[operator_index - 1]
@@ -40,8 +40,6 @@ def arithmetic_operation(tokens):
         tokens[operator_index - 1] = result
         tokens.pop(operator_index)
         tokens.pop(operator_index)
-        print(tokens)
-    print(tokens[0])
     return tokens[0]
 
 
@@ -73,13 +71,55 @@ def run_program_line(line):
         place_variables(tokens)
         return run_program_operation(tokens)
 
-def run_program_block(program):
-    lines = program.split('\n')
-    for line in lines:
-        run_program_line(line)
+
+def run_program_block(block):
+    block_start_line = block[0]
+    block_end_index = find_block_end(block)
+    tokens = block_start_line.split()
+    condition_as_line = ' '.join(tokens[1:])
+
+    is_block_conditions_met = run_program_line(condition_as_line)
+    if not is_block_conditions_met:
+        return block_end_index
+
+    # block conditions met
+    block_current_index = 1
+    while block_current_index < block_end_index:
+        line = block[block_current_index]
+        if is_block_start(line):
+            block = block[block_current_index:]
+            block_end_line_index = run_program_block(block)  # block_end_line_index is the line index of the block
+            block_current_index = block_current_index + block_end_line_index + 1
+        else:
+            run_program_line(line)
+            block_current_index = block_current_index + 1
+
+    return block_end_index
+
+
+def run_program(program_as_string):
+    lines = program_as_string.split('\n')
+    program_length = len(lines)
+    program_counter = 0
+    while program_counter < program_length:
+        line = lines[program_counter]
+        if is_block_start(line):
+            block = lines[program_counter:]
+            block_end_line_index = run_program_block(block)  # block_end_line_index is the line index of the block
+            program_counter = program_counter + block_end_line_index + 1
+        else:
+            run_program_line(line)
+            program_counter = program_counter + 1
 
 
 if __name__ == '__main__':
-    program = "v0 = -10 + 20 + v5 * 10 / 5 > v7\n" + "v1 = 3"
-    run_program_block(program)
+    program = "v0 = -10 + 20 + v5 * 10 / 5 > v7\n" + \
+              "v1 = 3\n" + \
+              "if v1 < 4\n" + \
+                "v1 = 99\n" + \
+                "if v1 < 50\n" + \
+                    "v1 = 200\n" + \
+                "end_if\n" +\
+              "end_if"
+    run_program(program)
     print(variables)

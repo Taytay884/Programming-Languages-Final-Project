@@ -8,3 +8,6 @@ def find_comparison_operator_index(tokens):
             return index
 
     return -1
+
+def calculate_condition(condition):
+    return
