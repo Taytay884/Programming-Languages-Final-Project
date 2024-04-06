@@ -55,7 +55,7 @@ def run_program_operation(tokens):
         comparison_result = evaluate_expression(f"{left_side_result} {tokens[comparison_operation_index]} {right_side_result}")
         return comparison_result
     else:
-        print(arithmetic_operation(tokens[:comparison_operation_index]))
+        return arithmetic_operation(tokens)
 
 def run_program_line(line):
     tokens = line.split()
@@ -73,8 +73,13 @@ def run_program_line(line):
         place_variables(tokens)
         return run_program_operation(tokens)
 
+def run_program_block(program):
+    lines = program.split('\n')
+    for line in lines:
+        run_program_line(line)
+
 
 if __name__ == '__main__':
-    program = "v0 = -10 + 20 + v5 * 10 / 5 > v7"
-    result = run_program_line(program)
+    program = "v0 = -10 + 20 + v5 * 10 / 5 > v7\n" + "v1 = 3"
+    run_program_block(program)
     print(variables)
