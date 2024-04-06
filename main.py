@@ -2,31 +2,8 @@ import arithmetic
 import conditional
 from variables import *
 from blocks import *
-import re
 
 arithmetic_order = ['*', '/', '+', '-']
-
-
-def is_valid_program(program):
-    # Define regular expressions for the grammar rules
-    negative_number_pattern = r"-[1-9][0-9]*"
-    number_pattern = r"0|[1-9][0-9]*"
-    arithmetic_pattern = r"[\+\-\*/]"
-    conditional_pattern = r"[<>]|=="
-
-    # Combine all patterns
-    full_pattern = re.compile(
-        rf"({negative_number_pattern})|({number_pattern})|({arithmetic_pattern})|({conditional_pattern})"
-    )
-
-    # Check if every token in the program matches the pattern
-    tokens = program.split()
-    for token in tokens:
-        if not full_pattern.fullmatch(token):
-            return False
-
-    return True
-
 
 def evaluate_expression(expr):
     return eval(expr.replace('/', '//'))
