@@ -143,6 +143,7 @@ if __name__ == '__main__':
     run_program(program)
     print(f"Expected Result:    {tests.remainder_check_result}")
     print(f"Result:             {variables}")
-    print("------[END - Power of number program]------")
+    reset_variables(variables)
+    print("------[END - Remainder Check program]------")
 
 
