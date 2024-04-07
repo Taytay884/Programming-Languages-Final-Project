@@ -27,3 +27,7 @@ def place_variables(tokens):
             tokens[i] = variables[token]
 
 
+def reset_variables(variables_dict):
+    for var in variables_dict:
+        variables_dict[var] = 0
+

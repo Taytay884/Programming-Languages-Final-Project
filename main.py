@@ -1,5 +1,6 @@
 import arithmetic
 import conditional
+import tests
 from variables import *
 from blocks import *
 
@@ -75,8 +76,11 @@ def run_program_block(block):
 
     # block conditions met
     if is_while_block(block):  # while
+        return_index = -1
         while is_block_conditions_met:
-            return run_block(block)
+            return_index = run_block(block)
+            is_block_conditions_met = run_program_line(condition_as_line)
+        return return_index
     else:  # if
         return run_block(block)
 
@@ -98,19 +102,47 @@ def run_program(program_as_string):
 
 
 if __name__ == '__main__':
-    program = "v1 = 3\n" + \
-              "if v1 < 4\n" + \
-                "v1 = 100\n" + \
-                "if v1 > 50\n" + \
-                    "v1 = 200\n" + \
-                "end_if\n" + \
-                "v2 = 300\n" + \
-              "end_if"
-    # program = "v1 = 0\n" + \
-    #           "while v1 < 3\n" + \
-    #             "v1 = v1 + 1\n" + \
-    #           "end_while"
+    print("------[START - Many while and ifs program]------")
+    program = tests.many_while_and_ifs_program
     run_program(program)
-    print(variables)
+    print(f"Expected Result:    {tests.many_while_and_ifs_program_result}")
+    print(f"Result:             {variables}")
+    reset_variables(variables)
+    print("------[END - Many while and ifs program]------")
+    print()
+
+    print("------[START - Factorial calculator program]------")
+    program = tests.factorial_program
+    run_program(program)
+    print(f"Expected Result:    {tests.factorial_program_result}")
+    print(f"Result:             {variables}")
+    reset_variables(variables)
+    print("------[END - Factorial calculator program]------")
+    print()
+
+    print("------[START - Sum of squares program]------")
+    program = tests.sum_of_squares
+    run_program(program)
+    print(f"Expected Result:    {tests.sum_of_squares_result}")
+    print(f"Result:             {variables}")
+    reset_variables(variables)
+    print("------[END - Sum of squares program]------")
+    print()
+
+    print("------[START - Power of number program]------")
+    program = tests.power_of_number
+    run_program(program)
+    print(f"Expected Result:    {tests.power_of_number_result}")
+    print(f"Result:             {variables}")
+    reset_variables(variables)
+    print("------[END - Power of number program]------")
+    print()
+
+    print("------[START - Remainder Check]------")
+    program = tests.remainder_check
+    run_program(program)
+    print(f"Expected Result:    {tests.remainder_check_result}")
+    print(f"Result:             {variables}")
+    print("------[END - Power of number program]------")
 
 
