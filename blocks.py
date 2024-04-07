@@ -20,3 +20,8 @@ def find_block_end(block):
     return -1
 
 
+def is_while_block(block):
+    block_start_line = block[0]
+    block_start_token = block_start_line.split()[0]
+    return block_start_token == 'while'
+

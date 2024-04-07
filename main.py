@@ -48,7 +48,6 @@ def run_program_line(line):
         place_variables(tokens)
         return run_program_operation(tokens)
 
-
 def run_program_block(block):
     block_start_line = block[0]
     block_end_index = find_block_end(block)
@@ -59,19 +58,28 @@ def run_program_block(block):
     if not is_block_conditions_met:
         return block_end_index
 
-    # block conditions met
-    block_current_index = 1
-    while block_current_index < block_end_index:
-        line = block[block_current_index]
-        if is_block_start(line):
-            block = block[block_current_index:]
-            block_end_line_index = run_program_block(block)  # block_end_line_index is the line index of the block
-            block_current_index = block_current_index + block_end_line_index + 1
-        else:
-            run_program_line(line)
-            block_current_index = block_current_index + 1
+    def run_block(current_block):
+        block_current_index = 1
+        while block_current_index < block_end_index:
+            line = current_block[block_current_index]
+            if is_block_start(line):
+                sub_block = current_block[block_current_index:]
+                block_end_line_index = run_program_block(
+                    sub_block)  # block_end_line_index is the line index of the block
+                block_current_index = block_current_index + block_end_line_index + 1
+            else:
+                run_program_line(line)
+                block_current_index = block_current_index + 1
 
-    return block_end_index
+        return block_end_index
+
+    # block conditions met
+    if is_while_block(block):  # while
+        while is_block_conditions_met:
+            return run_block(block)
+    else:  # if
+        return run_block(block)
+
 
 
 def run_program(program_as_string):
@@ -90,13 +98,19 @@ def run_program(program_as_string):
 
 
 if __name__ == '__main__':
-    program = "v0 = -10 + 20 + v5 * 10 / 5 > v7\n" + \
-              "v1 = 3\n" + \
+    program = "v1 = 3\n" + \
               "if v1 < 4\n" + \
-                "v1 = 99\n" + \
-                "if v1 < 50\n" + \
+                "v1 = 100\n" + \
+                "if v1 > 50\n" + \
                     "v1 = 200\n" + \
-                "end_if\n" +\
+                "end_if\n" + \
+                "v2 = 300\n" + \
               "end_if"
+    # program = "v1 = 0\n" + \
+    #           "while v1 < 3\n" + \
+    #             "v1 = v1 + 1\n" + \
+    #           "end_while"
     run_program(program)
     print(variables)
+
+
