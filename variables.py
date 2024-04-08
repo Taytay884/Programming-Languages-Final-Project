@@ -11,7 +11,6 @@ variables = {
     'v9': 0
 }
 
-
 def is_variable_placement(tokens):
     first_token = tokens[0]
     second_token = tokens[1]
@@ -20,14 +19,11 @@ def is_variable_placement(tokens):
         return True
     return False
 
-
 def place_variables(tokens):
     for i, token in enumerate(tokens):
         if token in variables:
             tokens[i] = variables[token]
 
-
 def reset_variables(variables_dict):
     for var in variables_dict:
         variables_dict[var] = 0
-

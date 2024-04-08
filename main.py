@@ -4,8 +4,6 @@ import tests
 from variables import *
 from blocks import *
 
-arithmetic_order = ['*', '/', '+', '-']
-
 def evaluate_expression(expr):
     return eval(expr.replace('/', '//'))
 
