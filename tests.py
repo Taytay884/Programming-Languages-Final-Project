@@ -1,3 +1,7 @@
+from engine import *
+from variables import *
+from blocks import *
+
 many_while_and_ifs_program = \
             "v1 = 0\n" + \
               "while v1 < 3\n" + \
@@ -78,3 +82,52 @@ remainder_check = \
     "v1 = 3\n" + \
     "v2 = 10 / 3"
 remainder_check_result = "10 / 3 = 3 (1) | v2 = 3"
+
+
+
+if __name__ == '__main__':
+    print("------[START - Many while and ifs program]------")
+    program = many_while_and_ifs_program
+    run_program(program)
+    print(f"Expected Result:    {many_while_and_ifs_program_result}")
+    print(f"Result:             {variables}")
+    reset_variables(variables)
+    print("------[END - Many while and ifs program]------")
+    print()
+
+    print("------[START - Factorial calculator program]------")
+    program = factorial_program
+    run_program(program)
+    print(f"Expected Result:    {factorial_program_result}")
+    print(f"Result:             {variables}")
+    reset_variables(variables)
+    print("------[END - Factorial calculator program]------")
+    print()
+
+    print("------[START - Sum of squares program]------")
+    program = sum_of_squares
+    run_program(program)
+    print(f"Expected Result:    {sum_of_squares_result}")
+    print(f"Result:             {variables}")
+    reset_variables(variables)
+    print("------[END - Sum of squares program]------")
+    print()
+
+    print("------[START - Power of number program]------")
+    program = power_of_number
+    run_program(program)
+    print(f"Expected Result:    {power_of_number_result}")
+    print(f"Result:             {variables}")
+    reset_variables(variables)
+    print("------[END - Power of number program]------")
+    print()
+
+    print("------[START - Remainder Check]------")
+    program = remainder_check
+    run_program(program)
+    print(f"Expected Result:    {remainder_check_result}")
+    print(f"Result:             {variables}")
+    reset_variables(variables)
+    print("------[END - Remainder Check program]------")
+
+
