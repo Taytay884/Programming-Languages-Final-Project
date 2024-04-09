@@ -7,7 +7,7 @@ exit_command = 'exit'
 def dynamic_interpreter():
     command = ''
     session_is_running = True
-    print(f"Enter your commands, to finish type: {exit_command}")
+    print(f"Enter as many commands as you like, to finish the session type: '{exit_command}")
     while(session_is_running):
         command = input("next_command >>> ")
         if(command.lower()  != exit_command.lower()):
@@ -16,6 +16,7 @@ def dynamic_interpreter():
             session_is_running = False
     print(f"memory state: \n {variables}")
     reset_variables(variables)
+    print(f"Goodbye :)")
 
 if __name__ == '__main__':
    print("Welcome to our language dynamic interpreter, \n" +
