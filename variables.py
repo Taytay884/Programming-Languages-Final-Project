@@ -1,3 +1,5 @@
+from error import *
+
 variables = {
     'v0': 0,
     'v1': 0,
@@ -11,18 +13,25 @@ variables = {
     'v9': 0
 }
 
+
 def is_variable_placement(tokens):
     first_token = tokens[0]
     second_token = tokens[1]
-    # Dictionary to define the precedence of operators
-    if first_token in variables and second_token == '=':
-        return True
+    if second_token == '=':
+        if first_token in variables:
+            return True
+        else:
+            raise CustomError("Variables are: v0, v1, v2, ... v9")
     return False
+
 
 def place_variables(tokens):
     for i, token in enumerate(tokens):
         if token in variables:
-            tokens[i] = variables[token]
+            tokens[i] = str(variables[token])
+        elif token[0] == 'v':
+            raise CustomError("Variables are: v0, v1, v2, ... v9")
+
 
 def reset_variables(variables_dict):
     for var in variables_dict:

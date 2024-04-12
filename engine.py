@@ -2,11 +2,13 @@ import arithmetic
 import conditional
 from variables import *
 from blocks import *
+from validation import *
 
 def evaluate_expression(expr):
     return eval(expr.replace('/', '//'))
 
 def arithmetic_operation(tokens):
+    validate_arithmetic_operation(tokens)
     while len(tokens) > 1:
         operator_index = arithmetic.find_strongest_arithmetic_operator_index(tokens)
         prev_token = tokens[operator_index - 1]
@@ -21,6 +23,7 @@ def arithmetic_operation(tokens):
 def run_program_operation(tokens):
     comparison_operation_index = conditional.find_comparison_operator_index(tokens)
     if comparison_operation_index != -1:
+        validate_comparison_operation(tokens)
         left_side_tokens = tokens[:comparison_operation_index]
         left_side_result = arithmetic_operation(left_side_tokens)
         right_side_tokens = tokens[comparison_operation_index + 1:]
@@ -32,7 +35,7 @@ def run_program_operation(tokens):
 
 def run_program_line(line):
     tokens = line.split()
-
+    validate_program_line(tokens)
     if is_variable_placement(tokens):
         # ['v0', '=', '25', '*', '8', '<', '10']
         # variable_token = v0
@@ -47,6 +50,7 @@ def run_program_line(line):
         return run_program_operation(tokens)
 
 def run_program_block(block):
+    validate_program_block(block)
     block_start_line = block[0]
     block_end_index = find_block_end(block)
     tokens = block_start_line.split()
@@ -82,7 +86,6 @@ def run_program_block(block):
         return run_block(block)
 
 
-
 def run_program(program_as_string):
     lines = program_as_string.split('\n')
     program_length = len(lines)
@@ -96,3 +99,5 @@ def run_program(program_as_string):
         else:
             run_program_line(line)
             program_counter = program_counter + 1
+
+
