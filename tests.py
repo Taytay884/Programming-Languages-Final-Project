@@ -120,14 +120,18 @@ program_line_not_enough_tokens = "v0"
 not_exists_variables = "v10 = 3 * 52"
 program_line_with_invalid_token = "v0 = 53 + a < 52"
 
+should_fail_result = "Should Fail"
 
 def run_test(test, expected_result = ""):
+    result = ''
     try:
-        run_program(test)
         print(f"Expected Result:    {expected_result}")
-        print(f"Result:             {variables}")
+        run_program(test)
+        result = f"Result:             {variables}"
     except CustomError as e:
-        print(f"\nTest failed because of an error: {e}\n")
+        result = f"\nResult:             Test failed because of an error: {e}\n"
+    finally:
+        print(result)
 
 
 if __name__ == '__main__':
@@ -163,67 +167,67 @@ if __name__ == '__main__':
     print()
 
     print("------[START - Not close block Check]------")
-    run_test(not_close_block_test)
+    run_test(not_close_block_test, should_fail_result)
     reset_variables(variables)
     print("------[END - Not close block Check program]------")
     print()
 
     print("------[START - Invalid Arithmetic Check]------")
-    run_test(invalid_arithmetic_operation)
+    run_test(invalid_arithmetic_operation, should_fail_result)
     reset_variables(variables)
     print("------[END - Invalid Arithmetic Check]------")
     print()
 
     print("------[START - Arithmetic with booleans Check]------")
-    run_test(arithmetic_operation_with_bool)
+    run_test(arithmetic_operation_with_bool, should_fail_result)
     reset_variables(variables)
     print("------[END - Arithmetic with booleans Check]------")
     print()
 
     print("------[START - Arithmetic with illegal token Check]------")
-    run_test(arithmetic_operation_illegal_token)
+    run_test(arithmetic_operation_illegal_token, should_fail_result)
     reset_variables(variables)
     print("------[END - Arithmetic with illegal token Check]------")
     print()
 
     print("------[START - Conditional operation with many conditions Check]------")
-    run_test(conditional_operation_with_many_condition_tokens)
+    run_test(conditional_operation_with_many_condition_tokens, should_fail_result)
     reset_variables(variables)
     print("------[END - Conditional operation with many conditions Check]------")
     print()
 
     print("------[START - Conditional operation without left-side Check]------")
-    run_test(conditional_operation_without_left_side)
+    run_test(conditional_operation_without_left_side, should_fail_result)
     reset_variables(variables)
     print("------[END - Conditional operation without left-side Check]------")
     print()
 
     print("------[START - Conditional operation without right-side Check]------")
-    run_test(conditional_operation_without_right_side)
+    run_test(conditional_operation_without_right_side, should_fail_result)
     reset_variables(variables)
     print("------[END - Conditional operation without right-side Check]------")
     print()
 
     print("------[START - Conditional operation with invalid arithmetic Check]------")
-    run_test(conditional_operation_with_invalid_arithmetic)
+    run_test(conditional_operation_with_invalid_arithmetic, should_fail_result)
     reset_variables(variables)
     print("------[END - Conditional operation with invalid arithmetic Check]------")
     print()
 
     print("------[START - Not enough tokens Check]------")
-    run_test(program_line_not_enough_tokens)
+    run_test(program_line_not_enough_tokens, should_fail_result)
     reset_variables(variables)
     print("------[END - Not enough tokens Check]------")
     print()
 
     print("------[START - Not existing variable Check]------")
-    run_test(not_exists_variables)
+    run_test(not_exists_variables, should_fail_result)
     reset_variables(variables)
     print("------[END - Not existing variable Check]------")
     print()
 
     print("------[START - Invalid token Check]------")
-    run_test(program_line_with_invalid_token)
+    run_test(program_line_with_invalid_token, should_fail_result)
     reset_variables(variables)
     print("------[END - Invalid token Check]------")
     print()
