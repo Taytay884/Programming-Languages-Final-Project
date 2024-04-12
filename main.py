@@ -9,7 +9,7 @@ def dynamic_interpreter():
     session_is_running = True
     print(f"Enter as many commands as you like, to finish the session type: '{exit_command}'")
     while session_is_running:
-        command = input("next_command >>> ")
+        command = input("next command >>> ")
         if command.lower() != exit_command.lower():
             run_program_line(command)
         else:
