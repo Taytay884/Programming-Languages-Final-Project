@@ -4,9 +4,12 @@ from variables import *
 from blocks import *
 from validation import *
 
-def evaluate_expression(expr):
-    return eval(expr.replace('/', '//'))
 
+def evaluate_expression(expr):
+    return eval(expr.replace('/', '//'))  # parsing divider properly
+
+
+# Validate and calculate arithmetic operation.
 def arithmetic_operation(tokens):
     validate_arithmetic_operation(tokens)
     while len(tokens) > 1:
@@ -20,6 +23,7 @@ def arithmetic_operation(tokens):
     return tokens[0]
 
 
+# Runs conditional or arithmetic operation
 def run_program_operation(tokens):
     comparison_operation_index = conditional.find_comparison_operator_index(tokens)
     if comparison_operation_index != -1:
@@ -33,13 +37,16 @@ def run_program_operation(tokens):
     else:
         return arithmetic_operation(tokens)
 
+
+'''
+Run a single program line
+place variables values before execution
+calculate the operation and place it in a variable if needed.
+'''
 def run_program_line(line):
     tokens = line.split()
     validate_program_line(tokens)
     if is_variable_placement(tokens):
-        # ['v0', '=', '25', '*', '8', '<', '10']
-        # variable_token = v0
-        # tokens = ['25', '*', '8', '<', '10']
         variable_token = tokens[0]
         tokens = tokens[2:]
         place_variables(tokens)
@@ -49,6 +56,12 @@ def run_program_line(line):
         place_variables(tokens)
         return run_program_operation(tokens)
 
+'''
+Analyzing the block
+Skips if the conditions doesn't met
+Understanding if needs to run many times or once (while or if)
+Executing the block and its nested blocks recursively.
+'''
 def run_program_block(block):
     validate_program_block(block)
     block_start_line = block[0]
@@ -60,6 +73,7 @@ def run_program_block(block):
     if not is_block_conditions_met:
         return block_end_index
 
+    # Nested function because it's using the closer's data.
     def run_block(current_block):
         block_current_index = 1
         while block_current_index < block_end_index:
@@ -86,6 +100,10 @@ def run_program_block(block):
         return run_block(block)
 
 
+'''
+Parse the program into lines, executing it and understands when it ends.
+Checks whether it's a block or a line to run.
+'''
 def run_program(program_as_string):
     lines = program_as_string.split('\n')
     program_length = len(lines)

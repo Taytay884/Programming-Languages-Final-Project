@@ -1,7 +1,13 @@
 from engine import *
 from variables import *
-from blocks import *
 
+'''
+Each variable in this file represents program execution in our language.
+These tests are representing edge-cases and limitations of our language.
+'''
+
+
+# Showcase for nested blocks
 many_while_and_ifs_program = \
             "v1 = 0\n" + \
               "while v1 < 3\n" + \
@@ -83,6 +89,19 @@ remainder_check = \
     "v2 = 10 / 3"
 remainder_check_result = "10 / 3 = 3 (1) | v2 = 3"
 
+'''
+The next tests should result in failure message in order to test our validations mechanism.
+'''
+should_fail_result = "Should Fail"
+
+invalid_block_structure = \
+            "v1 = 0\n" + \
+              "if v1 < 3\n" + \
+                "v1 = v1 + 1\n" + \
+              "end_if\n" + \
+              "end_if\n" + \
+            "if v1 < 3"
+
 not_close_block_test = \
             "v1 = 0\n" + \
               "while v1 < 3\n" + \
@@ -106,22 +125,22 @@ not_close_block_test = \
 
 
 invalid_arithmetic_operation = "3 + 1 + 2 2"
-arithmetic_operation_with_bool = "v0 = 2 > 1\n" + \
-                                      "v1 = v0 * 3"
 arithmetic_operation_illegal_token = "1 <= 2"
+
+boolean_variable_invalid_placement = "v0 = 2 > 1"
+boolean_variable_invalid_placement_2 = "v1 = 32 / 8 > 1 * 3 2"
+
 
 conditional_operation_with_many_condition_tokens = "1 < 2 < 3"
 conditional_operation_without_left_side = "< 1"
 conditional_operation_without_right_side = "3 <"
-conditional_operation_with_invalid_arithmetic = "v0 = 2 > 1\n" + \
-                                                "v1 = 32 / 8 > v0 * 3"
+conditional_operation_with_invalid_arithmetic = "v1 = 32 / 8 + 1 * 3 2"
 
 program_line_not_enough_tokens = "v0"
 not_exists_variables = "v10 = 3 * 52"
 program_line_with_invalid_token = "v0 = 53 + a < 52"
 
-should_fail_result = "Should Fail"
-
+# Executes a specific test program, prints the expected result and the actual result.
 def run_test(test, expected_result = ""):
     result = ''
     try:
@@ -178,10 +197,16 @@ if __name__ == '__main__':
     print("------[END - Invalid Arithmetic Check]------")
     print()
 
-    print("------[START - Arithmetic with booleans Check]------")
-    run_test(arithmetic_operation_with_bool, should_fail_result)
+    print("------[START - Boolean variable invalid placement Check]------")
+    run_test(boolean_variable_invalid_placement, should_fail_result)
     reset_variables(variables)
-    print("------[END - Arithmetic with booleans Check]------")
+    print("------[END - Boolean variable invalid placement Check]------")
+    print()
+
+    print("------[START - Boolean variable invalid placement 2 Check]------")
+    run_test(boolean_variable_invalid_placement_2, should_fail_result)
+    reset_variables(variables)
+    print("------[END - Boolean variable invalid placement 2 Check]------")
     print()
 
     print("------[START - Arithmetic with illegal token Check]------")
@@ -230,4 +255,10 @@ if __name__ == '__main__':
     run_test(program_line_with_invalid_token, should_fail_result)
     reset_variables(variables)
     print("------[END - Invalid token Check]------")
+    print()
+
+    print("------[START - Invalid block structure Check]------")
+    run_test(invalid_block_structure, should_fail_result)
+    reset_variables(variables)
+    print("------[END - Invalid block structure Check]------")
     print()

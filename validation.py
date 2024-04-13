@@ -37,15 +37,16 @@ arithmetic_operation_pattern = (
 )
 
 def validate_token(token):
-    valid_token_pattern = re.compile('|'.join(patterns.values()))
+    valid_token_pattern = '(' + '|'.join(patterns.values()) + ')$'
     # Check if the token matches any BNF rule
-    return valid_token_pattern.match(token)
+    return re.match(valid_token_pattern, token)
 
 
 def validate_arithmetic_operation(tokens):
     line = ' '.join(tokens)
     if not (re.match(arithmetic_operation_pattern, line) or re.match(f"^{number_pattern}$|^{variable_pattern}$", line)):
         raise CustomError(f"'{line}' is an invalid arithmetic operation")
+
 
 def validate_comparison_operation(tokens):
     line = ' '.join(tokens)
@@ -54,13 +55,21 @@ def validate_comparison_operation(tokens):
         raise CustomError(f"'{line}' has more than 1 condition")
 
 
+def is_comparison_operation(tokens):
+    line = ' '.join(tokens)
+    conditions = re.compile(condition_pattern).findall(line)
+    if len(conditions) >= 1:
+        return True
+    return False
+
+
 def validate_program_line(tokens):
     if len(tokens) < 2:
         raise CustomError(f"'{' '.join(tokens)}' is an invalid program line,"
                           f" program line length should have at least 2 tokens")
     for token in tokens:
         if not validate_token(token):
-            raise CustomError(f"{token} is an invalid token")
+            raise CustomError(f"'{token}' is an invalid token")
 
 
 def validate_program_block(block):

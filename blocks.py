@@ -1,3 +1,5 @@
+# This file includes utility functions for blocks.
+
 class tokens_consts:
     if_token = 'if'
     while_token = 'while'
@@ -7,6 +9,14 @@ def is_block_start(line):
     first_token = tokens[0]
     return first_token == tokens_consts.if_token or first_token == tokens_consts.while_token
 
+
+'''
+Like the balanced parentheses langauge.
+Using counter 
+incrementing while finding block opener
+decrementing while finding block closer
+aiming to reach to 0 (balanced block) and returning the index of this line.
+'''
 def find_block_end(block):
     block_start_token = get_block_start_token(block)
     end_token = "end_" + block_start_token  # end_if or end_while
