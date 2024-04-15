@@ -6,7 +6,7 @@ by Itay Ben Shmuel, Kristina Kolesnyk, Doron Ben Zaken
 
 The assignment can be found in `finalProject2024New.pdf`.
 
-### Documentation
+### Documentation & Answers for the assignment
 
 [Google Doc](https://docs.google.com/document/d/18LzRqjkmaxeEk0OPAKSMulB_E3oUl3rgVXZwKjL-xFg/edit?usp=sharing)
 
